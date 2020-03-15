@@ -1,0 +1,35 @@
+{
+  "name": "lottery-api",
+  "version": "0.0.1",
+  "description": "API de resultados da Loteria Federal BR",
+  "main": "index.js",
+  "scripts": {
+    "start-dev": "node_modules/.bin/nodemon --inspect index.js"
+  },
+  "keywords": [
+    "loteria",
+    "federal",
+    "api",
+    "mega",
+    "sena",
+    "lotofacil",
+    "quina"
+  ],
+  "author": "heridepaula@gmail.com",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv-flow": "^3.1.0",
+    "fastify": "^2.12.1",
+    "fastify-compress": "^2.0.1",
+    "fastify-helmet": "^3.0.2",
+    "fastify-mongodb": "^2.0.0",
+    "fastify-plugin": "^1.6.1",
+    "mongoose": "^5.9.3",
+    "pino-pretty": "^3.6.1"
+  },
+  "devDependencies": {
+    "faker": "^4.1.0",
+    "loadtest": "^4.1.0",
+    "nodemon": "^2.0.2"
+  }
+}
