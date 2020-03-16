@@ -1,4 +1,6 @@
-require('dotenv-flow').config()
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv-flow').config()
+}
 
 const fastify = require('fastify')({ logger: { prettyPrint: true }})
 const fp = require('fastify-plugin')
