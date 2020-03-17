@@ -1,0 +1,37 @@
+version: "3"
+services:
+  server:
+    container_name: lottery-api
+    restart: always
+    volumes:
+      - ./:/usr/src/app
+    environment:
+      - NODE_ENV=development
+    build: .
+    ports:
+      - "3000:3000"
+    links:
+      - mongo
+      - kibana
+      - elasticsearch
+  mongo:
+    container_name: lottery-mongo
+    restart: always
+    image: mongo
+    ports:
+      - "27017:27017"
+  elasticsearch :
+    container_name: lottery-elasticsearch 
+    image: elasticsearch:7.6.1
+    environment:
+      - node.name=es01
+      - cluster.name=es-docker-cluster
+      - discovery.type=single-node
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+  kibana:
+    container_name: lottery-kibana
+    image: kibana:7.6.1
+    ports:
+      - "5601:5601"
