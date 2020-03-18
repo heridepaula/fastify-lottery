@@ -2,7 +2,9 @@ if (process.env.NODE_ENV !== 'production') {
   require('dotenv-flow').config()
 }
 
-const fastify = require('fastify')({ logger: { prettyPrint: true }})
+const logger = require('./bootstrap/logger')
+const fastify = require('fastify')({ logger })
+
 const fp = require('fastify-plugin')
 
 fastify
@@ -13,7 +15,7 @@ const start = async () => {
   try {
     await fastify.listen(process.env.PORT, process.env.HOST)
   } catch (err) {
-    fastify.log.error(err)
+    fastify.log.error({ application: 'lottery-api' }, err)
     process.exit(1)
   }
 }
