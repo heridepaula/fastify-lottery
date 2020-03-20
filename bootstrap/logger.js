@@ -3,9 +3,9 @@ const Elasticsearch = require('bunyan-elasticsearch')
 const application = require('../package.json')
 
 const esStream = new Elasticsearch({
-  indexPattern: '[logstash-]YYYY.MM.DD',
+  indexPattern: `[logstash-][${application.name}]`,
   type: 'logs',
-  host: 'elasticsearch:9200'
+  host: process.env.ELASTICSEARCH_URL
 })
 
 esStream.on('error', function (err) {
