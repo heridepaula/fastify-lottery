@@ -3,6 +3,9 @@
   "version": "0.0.1",
   "description": "API de resultados da Loteria Federal BR",
   "main": "index.js",
+  "engines": {
+    "node": "12.16.1"
+  },
   "scripts": {
     "start-dev": "node_modules/.bin/nodemon --legacy-watch --inspect index.js",
     "start": "node index.js"
