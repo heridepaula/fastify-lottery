@@ -13,7 +13,7 @@ fastify
 
 const start = async () => {
   try {
-    await fastify.listen(process.env.PORT, process.env.HOST)
+    await fastify.listen(process.env.PORT, process.env.HOST_NAME)
   } catch (err) {
     fastify.log.error({ application: 'lottery-api' }, err)
     process.exit(1)
