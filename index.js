@@ -5,6 +5,9 @@ if (process.env.NODE_ENV !== 'production') {
 const logger = require('./bootstrap/logger')
 const fastify = require('fastify')({ logger })
 
+const HOST = process.env.HOST || '0.0.0.0'
+const PORT = process.env.PORT || 3000
+
 const fp = require('fastify-plugin')
 
 fastify
@@ -13,7 +16,7 @@ fastify
 
 const start = async () => {
   try {
-    await fastify.listen(process.env.PORT, process.env.HOST_NAME)
+    await fastify.listen(PORT, HOST)
   } catch (err) {
     fastify.log.error({ application: 'lottery-api' }, err)
     process.exit(1)
