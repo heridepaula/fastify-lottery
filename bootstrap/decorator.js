@@ -1,12 +1,5 @@
-const LotteryService = require('../modules/lottery/service')
+const Lottery = require('../models/lottery')
 
 module.exports = async (fastify) => {
-  const db = fastify.mongo.db
-
-  const lotteryCollection = await db.createCollection('lottery')
-  const lotteryService = new LotteryService(lotteryCollection)
-
-  await lotteryService.ensureIndexes(db)
-
-  fastify.decorate('lotteryService', lotteryService)
+  fastify.decorate('lotteryService', Lottery)
 }
