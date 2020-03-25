@@ -5,7 +5,7 @@ API de resultados da Loteria Federal BR
 > docker-compose up
 
 **Heroku**
-> GET - https://fastify-lottery.herokuapp.com/api/v1/{product}/
+> GET - https://fastify-lottery.herokuapp.com/api/v1/{product}/  
 > GET - https://fastify-lottery.herokuapp.com/api/v1/{product}/{contest}
 
 ***Exemplo***
