@@ -9,7 +9,7 @@ const { CronJob } = require('cron')
 
 const TARGET_FOLDER = 'temp'
 
-const start = async (url) => {
+module.exports = async () => {
 
   (new CronJob('* 59 17-22 * * 3,6', async () => {
 
@@ -25,7 +25,7 @@ const start = async (url) => {
       const zipFilePath = path.resolve(process.cwd(), `${TARGET_FOLDER}\\D_megase.zip`)
       const hmlFilePath = path.resolve(process.cwd(), `${TARGET_FOLDER}\\d_mega.htm`)
   
-      await download(url, TARGET_FOLDER, options)
+      await download(process.env,MEGASENA_FILE_URL, TARGET_FOLDER, options)
       await extract(zipFilePath, { dir: `${process.cwd()}\\${TARGET_FOLDER}`})
   
       const html = fs.readFileSync(hmlFilePath, 'latin1')
