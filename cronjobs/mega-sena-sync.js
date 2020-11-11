@@ -25,7 +25,7 @@ module.exports = async () => {
       const zipFilePath = path.resolve(process.cwd(), `${TARGET_FOLDER}\\D_megase.zip`)
       const hmlFilePath = path.resolve(process.cwd(), `${TARGET_FOLDER}\\d_mega.htm`)
   
-      await download(process.env,MEGASENA_FILE_URL, TARGET_FOLDER, options)
+      await download(process.env.MEGASENA_FILE_URL, TARGET_FOLDER, options)
       await extract(zipFilePath, { dir: `${process.cwd()}\\${TARGET_FOLDER}`})
   
       const html = fs.readFileSync(hmlFilePath, 'latin1')
@@ -66,5 +66,3 @@ module.exports = async () => {
     }
   }, null, true, 'America/Los_Angeles')).start()
 }
-
-start(process.env.MEGASENA_FILE_URL)
