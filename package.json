@@ -24,6 +24,7 @@
   "dependencies": {
     "bunyan": "^1.8.12",
     "bunyan-elasticsearch": "^1.0.1",
+    "cron": "^1.8.2",
     "dotenv-flow": "^3.1.0",
     "fastify": "^2.12.1",
     "fastify-compress": "^2.0.1",
@@ -31,6 +32,7 @@
     "fastify-helmet": "^3.0.2",
     "fastify-mongoose": "^0.3.0",
     "fastify-plugin": "^1.6.1",
+    "got": "^11.8.0",
     "mongoose": "^5.9.3",
     "pino-pretty": "^3.6.1"
   },

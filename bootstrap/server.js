@@ -6,4 +6,6 @@ module.exports = async (fastify) => {
     .register(require('fastify-compress'), { global: false })
     .register(fp(require('../models/lottery')))
     .register(require('../modules/lottery'), { prefix: '/api/v1/' })
+    .register(require('../modules/keep-alive'), { prefix: '/api/v1/' })
+    .register(require('../cronjobs/keep-alive'))
 }
