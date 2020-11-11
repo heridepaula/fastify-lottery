@@ -8,4 +8,5 @@ module.exports = async (fastify) => {
     .register(require('../modules/lottery'), { prefix: '/api/v1/' })
     .register(require('../modules/keep-alive'), { prefix: '/api/v1/' })
     .register(require('../cronjobs/keep-alive'))
+    .register(require('../cronjobs/mega-sena-sync'))
 }
