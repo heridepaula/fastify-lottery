@@ -4,10 +4,11 @@ module.exports = async (fastify) => {
   fastify
     .register(require('fastify-helmet'))
     .register(require('fastify-compress'), { global: false })
-    .register(fp(require('../models/lottery')))
-    .register(require('../modules/lottery'), { prefix: '/api/v1/' })
+    .register(fp(require('../models/megasena')))
+    .register(fp(require('../models/lotofacil')))
+    .register(require('../modules/megasena'), { prefix: '/api/v1/' })
+    .register(require('../modules/lotofacil'), { prefix: '/api/v1/' })
     .register(require('../modules/keep-alive'), { prefix: '/api/v1/' })
-    .register(require('../cronjobs/keep-alive'))
-    .register(require('../cronjobs/mega-sena-sync'))
+    .register(require('../cronjobs/megasena-sync'))
     .register(require('../cronjobs/lotofacil-sync'))
 }

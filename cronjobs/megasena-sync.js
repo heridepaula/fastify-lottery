@@ -54,8 +54,12 @@ module.exports = async () => {
             contest: parseInt(result.Concurso),
             date: moment(result[`Data Sorteio`], 'DD/MM/YYYY').toDate(),
             result: numbers.sort((x, y) => { return x - y }),
-            winners: parseInt(result['Ganhadores_Sena']),
-            prize: parseFloat(result['Rateio_Sena'].replace(/\./g, '').replace(/,/g, '.')),
+            sixNumbersWinners: parseInt(result['Ganhadores_Sena']),
+            sixNumbersPrize: parseFloat(result['Rateio_Sena'].replace(/\./g, '').replace(/,/g, '.')),
+            fiveNumbersWinners: parseInt(result['Ganhadores_Quina']),
+            fiveNumbersPrize: parseFloat(result['Rateio_Quina'].replace(/\./g, '').replace(/,/g, '.')),
+            fourNumbersWinners: parseInt(result['Ganhadores_Quadra']),
+            fourNumbersPrize: parseFloat(result['Rateio_Quadra'].replace(/\./g, '').replace(/,/g, '.')),
             accumulated: result.Acumulado === 'SIM',
             accumulatedValue: parseFloat(result['Valor_Acumulado'].replace(/\./g, '').replace(/,/g, '.')),
           })
@@ -67,6 +71,7 @@ module.exports = async () => {
       for (let result of results)
       {
         try {
+          console.log(result)
           await request({
             url: `${process.env.FASTIFY_LOTTERY_URL}/api/v1/mega-sena/`,
             method: 'POST',
