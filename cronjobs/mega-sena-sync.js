@@ -4,14 +4,18 @@ const download = require('download')
 const extract = require('extract-zip')
 const moment = require('moment')
 const HtmlTableToJson = require('html-table-to-json')
-const request = require('request')
+const request = require('request-promise')
 const { CronJob } = require('cron')
 
-const TARGET_FOLDER = 'temp'
 
 module.exports = async () => {
 
-  (new CronJob('* 59 17-22 * * 3,6', async () => {
+  //(new CronJob('* 59 17-22 * * 3,6', async () => {
+    (new CronJob('* 1/1 * * * *', async () => {
+
+      const TARGET_FOLDER = path.resolve(process.cwd(), 'temp')
+      
+      console.log("FOLDER", TARGET_FOLDER)
 
     const options = {
       headers: {
@@ -22,19 +26,25 @@ module.exports = async () => {
 
     try 
     {
-      const zipFilePath = path.resolve(process.cwd(), `${TARGET_FOLDER}\\D_megase.zip`)
-      const hmlFilePath = path.resolve(process.cwd(), `${TARGET_FOLDER}\\d_mega.htm`)
+      const zipFilePath = path.resolve(TARGET_FOLDER, 'D_megase.zip')
+      const hmlFilePath = path.resolve(TARGET_FOLDER, 'd_mega.htm')
+
+      if (!fs.existsSync(TARGET_FOLDER)){
+        fs.mkdirSync(TARGET_FOLDER);
+      }
   
       await download(process.env.MEGASENA_FILE_URL, TARGET_FOLDER, options)
-      await extract(zipFilePath, { dir: `${process.cwd()}\\${TARGET_FOLDER}`})
+      await extract(zipFilePath, { dir: TARGET_FOLDER})
   
       const html = fs.readFileSync(hmlFilePath, 'latin1')
-      const json = new HtmlTableToJson(html).results
-  
-      for (let result of json[0])
+      const parsedResults = new HtmlTableToJson(html).results
+      const results = []
+
+      for (let result of parsedResults[0])
       {
         if (!isNaN(parseInt(result.Concurso))) {
-          const array = [
+
+          const numbers = [
             parseInt(result['1ª Dezena']),
             parseInt(result['2ª Dezena']),
             parseInt(result['3ª Dezena']),
@@ -42,22 +52,35 @@ module.exports = async () => {
             parseInt(result['5ª Dezena']),
             parseInt(result['6ª Dezena'])
           ]
-          const game = {
+
+          results.push({
             contest: parseInt(result.Concurso),
             date: moment(result[`Data Sorteio`], 'DD/MM/YYYY').toDate(),
-            numbers: array.sort((x, y) => { return x - y }),
+            result: numbers.sort((x, y) => { return x - y }),
             winners: parseInt(result['Ganhadores_Sena']),
             prize: parseFloat(result['Rateio_Sena'].replace(/\./g, '').replace(/,/g, '.')),
             accumulated: result.Acumulado === 'SIM',
             accumulatedValue: parseFloat(result['Valor_Acumulado'].replace(/\./g, '').replace(/,/g, '.')),
-          }
-  
+          })
+        }
+      }
+
+      results.sort((x, y) => y.contest - x.contest)
+
+      for (let result of results)
+      {
+        try {
+          console.log(result.numbers)
+
           await request({
-            url: `${FASTIFY_LOTTERY_URL}/api/v1/mega-sena/`,
+            url: `${process.env.FASTIFY_LOTTERY_URL}/api/v1/mega-sena/`,
             method: 'POST',
             json: true,
-            body: game
+            body: result
           })
+        } catch (ex) {
+          console.log(ex.message)
+          return;
         }
       }
   
