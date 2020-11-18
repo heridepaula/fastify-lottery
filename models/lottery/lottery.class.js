@@ -1,7 +1,7 @@
 class Lottery {
   static async getAll (product) {
     try {
-      return this.find({ product })
+      return this.find({ product }).sort({contest: 'descending'})
     } catch (ex) {
       throw ex
     }

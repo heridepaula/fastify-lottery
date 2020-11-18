@@ -10,7 +10,7 @@ const { CronJob } = require('cron')
 
 module.exports = async () => {
 
-  (new CronJob('* 59 17-22 * * 3,6', async () => {
+  (new CronJob('* 59 17-22 * * 1-6', async () => {
 
     const TARGET_FOLDER = path.resolve(process.cwd(), 'temp')
 
@@ -23,14 +23,14 @@ module.exports = async () => {
 
     try 
     {
-      const zipFilePath = path.resolve(TARGET_FOLDER, 'D_megase.zip')
-      const hmlFilePath = path.resolve(TARGET_FOLDER, 'd_mega.htm')
+      const zipFilePath = path.resolve(TARGET_FOLDER, 'D_lotfac.zip')
+      const hmlFilePath = path.resolve(TARGET_FOLDER, 'd_lotfac.htm')
 
       if (!fs.existsSync(TARGET_FOLDER)){
         fs.mkdirSync(TARGET_FOLDER);
       }
   
-      await download(process.env.MEGASENA_FILE_URL, TARGET_FOLDER, options)
+      await download(process.env.LOTOFACIL_FILE_URL, TARGET_FOLDER, options)
       await extract(zipFilePath, { dir: TARGET_FOLDER})
   
       const html = fs.readFileSync(hmlFilePath, 'latin1')
@@ -42,22 +42,31 @@ module.exports = async () => {
         if (!isNaN(parseInt(result.Concurso))) {
 
           const numbers = [
-            parseInt(result['1ª Dezena']),
-            parseInt(result['2ª Dezena']),
-            parseInt(result['3ª Dezena']),
-            parseInt(result['4ª Dezena']),
-            parseInt(result['5ª Dezena']),
-            parseInt(result['6ª Dezena'])
+            parseInt(result['Bola1']),
+            parseInt(result['Bola2']),
+            parseInt(result['Bola3']),
+            parseInt(result['Bola4']),
+            parseInt(result['Bola5']),
+            parseInt(result['Bola6']),
+            parseInt(result['Bola7']),
+            parseInt(result['Bola8']),
+            parseInt(result['Bola9']),
+            parseInt(result['Bola10']),
+            parseInt(result['Bola11']),
+            parseInt(result['Bola12']),
+            parseInt(result['Bola13']),
+            parseInt(result['Bola14']),
+            parseInt(result['Bola15']),
           ]
 
           results.push({
             contest: parseInt(result.Concurso),
             date: moment(result[`Data Sorteio`], 'DD/MM/YYYY').toDate(),
             result: numbers.sort((x, y) => { return x - y }),
-            winners: parseInt(result['Ganhadores_Sena']),
-            prize: parseFloat(result['Rateio_Sena'].replace(/\./g, '').replace(/,/g, '.')),
-            accumulated: result.Acumulado === 'SIM',
-            accumulatedValue: parseFloat(result['Valor_Acumulado'].replace(/\./g, '').replace(/,/g, '.')),
+            winners: parseInt(result['Ganhadores_15_Números']),
+            prize: parseFloat(result['Valor_Rateio_15_Números'].replace(/\./g, '').replace(/,/g, '.')),
+            accumulated: parseFloat(result['Acumulado_15_Números'].replace(/\./g, '').replace(/,/g, '.')) > 0,
+            accumulatedValue: parseFloat(result['Acumulado_15_Números'].replace(/\./g, '').replace(/,/g, '.')),
           })
         }
       }
@@ -68,7 +77,7 @@ module.exports = async () => {
       {
         try {
           await request({
-            url: `${process.env.FASTIFY_LOTTERY_URL}/api/v1/mega-sena/`,
+            url: `${process.env.FASTIFY_LOTTERY_URL}/api/v1/lotofacil/`,
             method: 'POST',
             json: true,
             body: result
