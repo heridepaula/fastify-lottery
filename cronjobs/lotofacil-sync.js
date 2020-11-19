@@ -10,7 +10,7 @@ const { CronJob } = require('cron')
 
 module.exports = async () => {
 
-  (new CronJob('* 59 17-23 * * 1-6', async () => {
+  (new CronJob('* 59 17-23 * * 1,2,3,4,5,6', async () => {
     const TARGET_FOLDER = path.resolve(process.cwd(), 'temp')
 
     const options = {
