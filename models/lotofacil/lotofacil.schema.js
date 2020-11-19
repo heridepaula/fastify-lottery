@@ -2,7 +2,7 @@ const mongo = require('mongoose')
 const Schema = mongo.Schema
 
 const lotofacilSchema = new Schema({
-  contest: { type: Number, required: true },
+  contest: { type: Number, required: true, index: { unique: true } },
   date: { type: Date, required: true },
   result: { type: [ Number ], required: true },
   fifteenNumbersWinners: { type: Number, required: true, default: 0 },

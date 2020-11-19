@@ -71,7 +71,6 @@ module.exports = async () => {
       for (let result of results)
       {
         try {
-          console.log(result)
           await request({
             url: `${process.env.FASTIFY_LOTTERY_URL}/api/v1/mega-sena/`,
             method: 'POST',
@@ -87,5 +86,5 @@ module.exports = async () => {
     } catch (error) {
       console.log(error)
     }
-  }, null, true, 'America/Los_Angeles')).start()
+  }, null, true, process.env.TZ)).start()
 }

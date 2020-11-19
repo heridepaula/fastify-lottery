@@ -11,7 +11,6 @@ const { CronJob } = require('cron')
 module.exports = async () => {
 
   (new CronJob('* 59 17-22 * * 1-6', async () => {
-
     const TARGET_FOLDER = path.resolve(process.cwd(), 'temp')
 
     const options = {
@@ -99,5 +98,5 @@ module.exports = async () => {
     } catch (error) {
       console.log(error)
     }
-  }, null, true, 'America/Los_Angeles')).start()
+  }, null, true, process.env.TZ)).start()
 }

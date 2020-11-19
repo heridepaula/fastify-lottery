@@ -2,7 +2,7 @@ const mongo = require('mongoose')
 const Schema = mongo.Schema
 
 const megaSenaSchema = new Schema({
-  contest: { type: Number, required: true },
+  contest: { type: Number, required: true, index: { unique: true } },
   date: { type: Date, required: true },
   result: { type: [ Number ], required: true },
   sixNumbersWinners: { type: Number, required: true, default: 0 },
@@ -14,7 +14,5 @@ const megaSenaSchema = new Schema({
   accumulated: { type: Boolean, required: true, default: true },
   accumulatedValue: { type: Number, required: true }
 })
-
-megaSenaSchema.index({ contest: 1 }, { unique: true })
 
 module.exports = megaSenaSchema
