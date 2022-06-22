@@ -34,7 +34,7 @@
     "fastify-helmet": "^3.0.2",
     "fastify-mongoose": "^0.3.0",
     "fastify-plugin": "^1.6.1",
-    "got": "^11.8.0",
+    "got": "^11.8.5",
     "html-table-to-json": "^1.0.0",
     "moment": "^2.29.1",
     "mongoose": "^5.9.3",
